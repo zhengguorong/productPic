@@ -55,6 +55,7 @@ casper.then(function () {
     images = images.unique()
     for (var i = 0; i < images.length; i++) {
         if (images[i]) {
+            this.echo('正在下载 ' + i)
             this.download('http:' + images[i] + imageSize + '.jpg', dir + i + '.jpg');
         }
     }
