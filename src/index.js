@@ -1,10 +1,11 @@
 var images = [];
-var dir = 'data/shirt/'
 var imageSize = '_200x200'
-var pageIndex = 0
+var queryKey = '毛衣女'
+var dir = 'data/' + queryKey + '/'
+
 var casper = require('casper').create({
     pageSettings: {
-        loadImages: true
+        loadImages: false
     }
 });
 
@@ -15,37 +16,32 @@ function getImages() {
     });
 }
 
-Array.prototype.unique = function(){
+Array.prototype.unique = function () {
     var res = [];
     var json = {};
-    for(var i = 0; i < this.length; i++){
-     if(!json[this[i]]){
-      res.push(this[i]);
-      json[this[i]] = 1;
-     }
+    for (var i = 0; i < this.length; i++) {
+        if (!json[this[i]]) {
+            res.push(this[i]);
+            json[this[i]] = 1;
+        }
     }
     return res;
-   }
+}
 
 casper.start('https://www.taobao.com/', function () {
     this.waitForSelector('form[action="//s.taobao.com/search"]');
 });
 
 casper.then(function () {
-    this.fill('form[action="//s.taobao.com/search"]', { q: '衬衫' }, true);
+    this.fill('form[action="//s.taobao.com/search"]', { q: queryKey }, true);
 });
 
-casper.then(function () {
-    this.waitForSelector('#mainsrp-sortbar')
-});
+casper.wait(2000)
 
-casper.then(function () {
-    this.click('a[data-value="sale-desc"]')
-    this.wait(2000)
-})
-
+// 收集图片地址
 for (var j = 0; j < 100; j++) {
     casper.then(function () {
+        this.echo('正在爬取...')
         if (j > 0) this.clickLabel('下一页', 'span')
         this.wait(1000, function () {
             this.scrollToBottom()
@@ -54,13 +50,16 @@ for (var j = 0; j < 100; j++) {
     });
 }
 
-
-casper.run(function () {
+// 下载图片
+casper.then(function () {
     images = images.unique()
     for (var i = 0; i < images.length; i++) {
         if (images[i]) {
             this.download('http:' + images[i] + imageSize + '.jpg', dir + i + '.jpg');
         }
     }
-    this.exit()
+});
+
+casper.run(function () {
+    this.echo('下载完成').exit()
 });
