@@ -46,7 +46,7 @@ function process(casper, keyword) {
     for (var j = 0; j < 100; j++) {
         casper.then(function () {
             this.waitForSelector('#mainsrp-pager', function () {
-                this.echo('正在爬取...')
+                this.echo('正在爬取---' + keyword)
                 if (j > 0) this.clickLabel('下一页', 'span')
                 this.wait(1000, function () {
                     this.scrollToBottom()
