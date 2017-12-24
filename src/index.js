@@ -43,7 +43,7 @@ function process(casper, keyword) {
     casper.wait(2000)
 
     // 收集图片地址
-    for (var j = 0; j < 1; j++) {
+    for (var j = 0; j < 100; j++) {
         casper.then(function () {
             this.waitForSelector('#mainsrp-pager', function () {
                 this.echo('正在爬取...')
