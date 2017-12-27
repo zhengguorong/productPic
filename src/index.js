@@ -1,5 +1,5 @@
 var imageSize = '_200x200'
-var queryKey = ['羽绒服男', '羽绒服女', '连衣裙', '风衣', '牛仔裤']
+var queryKey = ['棉衣男', '棉衣女', '阔脚裤', '卫衣', '皮草', 'POLO衫', '呢大衣']
 
 function getImages() {
     var images = document.querySelectorAll('#mainsrp-itemlist img');
@@ -58,7 +58,9 @@ function process(casper, keyword) {
 
     // 下载图片
     casper.then(function () {
+        console.log(images.length)
         images = images.unique()
+        console.log(images.length)
         for (var i = 0; i < images.length; i++) {
             if (images[i]) {
                 this.echo('正在下载 ' + keyword + i)
