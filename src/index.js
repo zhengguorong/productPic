@@ -1,5 +1,5 @@
 var imageSize = '_200x200'
-var queryKey = ['棉衣男', '棉衣女', '阔脚裤', '卫衣', '皮草', 'POLO衫', '呢大衣']
+var queryKey = ['棕色 衬衫', '棕色 t恤', '棕色 外套', '棕色 卫衣', '棕色 裤子']
 
 function getImages() {
     var images = document.querySelectorAll('#mainsrp-itemlist img');
@@ -43,12 +43,12 @@ function process(casper, keyword) {
     casper.wait(2000)
 
     // 收集图片地址
-    for (var j = 0; j < 100; j++) {
+    for (var j = 0; j < 4; j++) {
         casper.then(function () {
             this.waitForSelector('#mainsrp-pager', function () {
                 this.echo('正在爬取---' + keyword)
                 if (j > 0) this.clickLabel('下一页', 'span')
-                this.wait(1000, function () {
+                this.wait(2000, function () {
                     this.scrollToBottom()
                     images = images.concat(this.evaluate(getImages));
                 })
@@ -64,7 +64,7 @@ function process(casper, keyword) {
         for (var i = 0; i < images.length; i++) {
             if (images[i]) {
                 this.echo('正在下载 ' + keyword + i)
-                this.download('http:' + images[i] + imageSize + '.jpg', 'data/' + keyword + '/' + i + '.jpg');
+                this.download('http:' + images[i] + imageSize + '.jpg', 'data/棕色/' + new Date().getTime() + '.jpg');
             }
         }
     });
