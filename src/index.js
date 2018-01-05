@@ -64,7 +64,7 @@ function process(casper, keyword) {
         for (var i = 0; i < images.length; i++) {
             if (images[i]) {
                 this.echo('正在下载 ' + keyword + i)
-                this.download('http:' + images[i] + imageSize + '.jpg', 'data/棕色/' + new Date().getTime() + '.jpg');
+                this.download('http:' + images[i] + imageSize + '.jpg', 'data/' + keyword + '/' + i + '.jpg');
             }
         }
     });
